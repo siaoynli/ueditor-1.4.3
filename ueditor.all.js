@@ -10234,7 +10234,7 @@
     UE.plugins['defaultfilter'] = function () {
         var me = this;
         me.setOpt({
-            'allowDivTransToP': false,
+            'allowDivTransToP': false, // //lixiaoyun  移除div转p
             'disabledTableInTable': true
         });
         //默认的过滤处理
@@ -10264,16 +10264,17 @@
                         return;
                     }
                     switch (node.tagName) {
+                        //lixiaoyun  移除过滤
                         // case 'style':
                         // case 'script':
-                            // node.setAttr({
-                            //     cdata_tag: node.tagName,
-                            //     cdata_data: (node.innerHTML() || ''),
-                            //     '_ue_custom_node_':'true'
-                            // });
-                            // node.tagName = 'div';
-                            // node.innerHTML('');
-                          //  break;
+                        // node.setAttr({
+                        //     cdata_tag: node.tagName,
+                        //     cdata_data: (node.innerHTML() || ''),
+                        //     '_ue_custom_node_':'true'
+                        // });
+                        // node.tagName = 'div';
+                        // node.innerHTML('');
+                        //  break;
                         case 'a':
                             if (val = node.getAttr('href')) {
                                 node.setAttr('_href', val)
