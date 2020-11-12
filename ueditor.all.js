@@ -17974,29 +17974,37 @@
          * @param toEmbed 是否以flash代替显示
          * @param addParagraph  是否需要添加P 标签
          */
-        function creatInsertStr(url, width, height, id, align, classname, type) {
+        function creatInsertStr(url, width, height, id, align, classname, type, poster) {
 
             url = utils.unhtmlForUrl(url);
             align = utils.unhtml(align);
+            poster = utils.unhtml(poster);
             classname = utils.unhtml(classname);
 
             width = parseInt(width, 10) || 0;
             height = parseInt(height, 10) || 0;
 
+            if (!poster) {
+                poster = me.options.UEDITOR_HOME_URL + 'themes/default/images/spacer.gif';
+            }
 
             var str;
             switch (type) {
                 case 'image':
                     str = '<img ' + (id ? 'id="' + id + '"' : '') + ' width="' + width + '" height="' + height + '" _url="' + url + '" class="' + classname.replace(/\bvideo-js\b/, '') + '"' +
-                        ' src="' + me.options.UEDITOR_HOME_URL + 'themes/default/images/spacer.gif" style="background:url(' + me.options.UEDITOR_HOME_URL + 'themes/default/images/videologo.gif) no-repeat center center; border:1px solid gray;' + (align ? 'float:' + align + ';' : '') + '" />'
+                        ' src="' + poster + '" style="background:url(' + me.options.UEDITOR_HOME_URL + 'themes/default/images/videologo.gif) no-repeat center center; border:1px solid gray;' + (align ? 'float:' + align + ';' : '') + '" />'
                     break;
                 case 'embed':
+                    //poster 是默认图标，就重置poster
+                    if (poster.indexOf("spacer.gif") !== -1) {
+                        poster = "";
+                    }
                     var ext = url.substr(url.lastIndexOf('.') + 1);
                     str = '<video class="' + classname + '"' +
                         ' src="' + utils.html(url) + '"' +
                         ' width="' + width + '"' +
                         ' height="' + height + '"' +
-                        ' play="true" loop="false"  controls="controls" preload="auto" >' +
+                        ' play="true" loop="false"  controls="controls" preload="auto" poster="' + poster + '">' +
                         '<source src="' + utils.html(url) + '" type="video/' + ext + '" /></video>';
                     break;
                 case 'video':
@@ -18015,7 +18023,7 @@
             utils.each(root.getNodesByTagName(img2video ? 'img' : 'embed video'), function (node) {
                 var className = node.getAttr('class');
                 if (className && className.indexOf('edui-faked-video') != -1) {
-                    var html = creatInsertStr(img2video ? node.getAttr('_url') : node.getAttr('src'), node.getAttr('width'), node.getAttr('height'), null, node.getStyle('float') || '', className, img2video ? 'embed' : 'image');
+                    var html = creatInsertStr(img2video ? node.getAttr('_url') : node.getAttr('src'), node.getAttr('width'), node.getAttr('height'), null, node.getStyle('float') || '', className, img2video ? 'embed' : 'image', img2video ? node.getAttr('src') : node.getAttr('poster'));
                     node.parentNode.replaceChild(UE.uNode.createElement(html), node);
                 }
                 if (className && className.indexOf('edui-upload-video') != -1) {
@@ -18105,7 +18113,8 @@
                 for (var i = 0, vi, len = videoObjs.length; i < len; i++) {
                     vi = videoObjs[i];
                     cl = (type == 'upload' ? 'edui-upload-video video-js vjs-default-skin' : 'edui-faked-video');
-                    html.push(creatInsertStr(vi.url, vi.width || 420, vi.height || 280, id + i, null, cl, 'image'));
+
+                    html.push(creatInsertStr(vi.url, vi.width || 420, vi.height || 280, id + i, null, cl, 'image', vi.poster || null));
                 }
                 me.execCommand("inserthtml", html.join(""), true);
                 var rng = this.selection.getRange();

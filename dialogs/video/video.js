@@ -140,11 +140,14 @@
             videoObjs = [];
         for (var i = 0, li; li = lis[i++];) {
             if (domUtils.hasClass(li, 'selected')) {
+                var img=li.getElementsByTagName("img")[0];
                 videoObjs.push({
                     url: li.getAttribute("ue_video_url"),
                     width: 420,
                     height: 280,
-                    align: "none"
+                    align: "none",
+                    //封面用传进去
+                    poster:img.getAttribute("src")
                 });
             }
         }
@@ -900,13 +903,13 @@
                         for (var i = 0; i < json.data.length; i++) {
                             if (json.data[i].attach) {
                                 var src = "/static/ueditor/themes/default/images/videologo.gif";
-                                if (json.data[i].attach.video_thumb_infos) {
-                                    src = json.data[i].attach.video_thumb_infos[4];
+                                if (json.data[i].thumb) {
+                                    src = json.data[i].thumb;
                                 }
                                 list.push({
                                     title: json.data[i].name,
                                     src: src,
-                                    url: json.data[i].attach.file_path,
+                                    url: json.data[i].url,
                                 });
                             }
                         }

@@ -1058,8 +1058,8 @@
                             if (json.data[i].attach) {
                                 list.push({
                                     title: json.data[i].name,
-                                    src: json.data[i].attach.file_path,
-                                    url: json.data[i].attach.file_path
+                                    src: json.data[i].url,
+                                    url: json.data[i].url
                                 });
                             }
                         }
