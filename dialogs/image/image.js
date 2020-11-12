@@ -1039,11 +1039,10 @@
             var _this = this,
                 key = $G('searchTxt').value,
                 type = $G('searchType').value,
-                keepOriginName = editor.options.keepOriginName ? "1" : "0",
                 pageNum = $G('pageNum').value,
                 // url = "https://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&ct=201326592&is=&fp=result&queryWord=" + key + "&cl=2" + type + "&ie=utf-8&oe=utf-8&adpicid=&z=&ic=0&word=" + key + "&se=&tab=&width=&height=&istype=2&qc=&nc=1&fr=&pn=60&rn=" + pageNum + "&gsm=78&" + new Date() + "=";
                 //从图库或者文件库中搜索
-                url = "/ueditor/search?keyword=" + key + "&type=" + type + "&limit=" + pageNum;
+                url = editor.getActionUrl("searchimage") + "&keyword=" + key + "&type=" + type + "&limit=" + pageNum;
 
             //配合后端修改具体参数
             $G('searchListUl').innerHTML = lang.searchLoading;
@@ -1071,27 +1070,6 @@
                 }
             });
 
-            /*  ajax.request(url, {
-                 'dataType': 'jsonp',
-                 'onsuccess': function (json) {
-                     var list = [];
-                     if (json && json.data) {
-                         for (var i = 0; i < json.data.length; i++) {
-                             if (json.data[i].attach) {
-                                 list.push({
-                                     title: json.data[i].name,
-                                     src: json.data[i].attach.file_path,
-                                     url: json.data[i].file_path
-                                 });
-                             }
-                         }
-                     }
-                     _this.setList(list);
-                 },
-                 'onerror': function () {
-                     $G('searchListUl').innerHTML = lang.searchRetry;
-                 }
-             }); */
         },
         /* 添加图片到列表界面上 */
         setList: function (list) {

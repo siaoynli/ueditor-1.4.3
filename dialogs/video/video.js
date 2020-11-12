@@ -20,6 +20,7 @@
         initVideo();
         initUpload();
         SearchVideo = new SearchVideo();
+
     };
 
     /* 初始化tab标签 */
@@ -140,14 +141,14 @@
             videoObjs = [];
         for (var i = 0, li; li = lis[i++];) {
             if (domUtils.hasClass(li, 'selected')) {
-                var img=li.getElementsByTagName("img")[0];
+                var img = li.getElementsByTagName("img")[0];
                 videoObjs.push({
                     url: li.getAttribute("ue_video_url"),
                     width: 420,
                     height: 280,
                     align: "none",
                     //封面用传进去
-                    poster:img.getAttribute("src")
+                    poster: img.getAttribute("src")
                 });
             }
         }
@@ -292,7 +293,7 @@
                 ' play="true" loop="false" data-setup="{}" controls="controls" preload="auto">' +
                 '</video>';
 
-        }else{
+        } else {
             $G("preview").innerHTML = '<div class="previewMsg"><span>' + lang.urlError + '</span></div>';
         }
     }
@@ -889,7 +890,7 @@
                 pageNum = $G('pageNum').value,
                 // url = "https://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&ct=201326592&is=&fp=result&queryWord=" + key + "&cl=2" + type + "&ie=utf-8&oe=utf-8&adpicid=&z=&ic=0&word=" + key + "&se=&tab=&width=&height=&istype=2&qc=&nc=1&fr=&pn=60&rn=" + pageNum + "&gsm=78&" + new Date() + "=";
                 //从图库或者文件库中搜索
-                url = "/ueditor/search?file_type=videos&keyword=" + key + "&type=" + type + "&limit=" + pageNum;
+                url = editor.getActionUrl("searchvideo") + "&keyword=" + key + "&type=" + type + "&limit=" + pageNum;
 
             //配合后端修改具体参数
             $G('searchListUl').innerHTML = lang.searchLoading;
