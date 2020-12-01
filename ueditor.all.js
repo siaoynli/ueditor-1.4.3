@@ -23031,6 +23031,7 @@
                     if (ci.nodeType == 3) {
                         continue;
                     }
+
                     var name = ci.tagName.toLowerCase();
                     if (name == 'img' && ci.getAttribute('anchorname')) {
                         name = 'anchor';
