@@ -903,7 +903,7 @@
                     if (json && json.data) {
                         for (var i = 0; i < json.data.length; i++) {
                             if (json.data[i].attach) {
-                                var src = "/static/ueditor/themes/default/images/videologo.gif";
+                                var src = "/assets/backend/ueditor/themes/default/images/videos.jpg";
                                 if (json.data[i].thumb) {
                                     src = json.data[i].thumb;
                                 }
